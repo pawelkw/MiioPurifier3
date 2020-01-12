@@ -38,7 +38,11 @@ while True:
     status = purifier.status()
     print(status)
     client.publish(mqtt_prefix + "/onoffstate", 'ON' if purifier.status().is_on else 'OFF')
-    time.sleep(0.500)
+    client.publish(mqtt_prefix + "/aqi", purifier.status().aqi)
+    client.publish(mqtt_prefix + "/average_aqi", purifier.status().average_aqi)
+    client.publish(mqtt_prefix + "/fan_level", purifier.status().fan_level)
+    client.publish(mqtt_prefix + "/mode", purifier.status().mode.name)
+    time.sleep(1)
 
 client.loop_stop()
 client.disconnect()
